@@ -1,0 +1,53 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon">Recipe Book</span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <!--with nav class, the megamenu will not be working -->
+        <li id="menu-list mx-6" routerLinkActive="active">
+          <a class="nav-link" routerLink="/recipes">Recipes</a>
+          <div class="collapse navbar-collapse sub-menu container-fluid">
+            <ul class="navbar-nav mr-auto sub-menu-container container-fluid">
+              <li class="nav-item">menu 1</li>
+              <li class="nav-item">menu 2</li>
+              <li class="nav-item">menu 3</li>
+              <li class="nav-item">menu 4</li>
+              <li class="nav-item">menu 5</li>
+              <li class="nav-item">menu 6</li>
+              <li class="nav-item">menu 7</li>
+              <li class="nav-item">menu 8</li>
+              <li class="nav-item">menu 9</li>
+              <li class="nav-item">menu 10</li>
+            </ul>
+          </div>
+        </li>
+        <li class="mx-6" routerLinkActive="active">
+          <a class="nav-link" routerLink="/shopping-list">Shopping List</a>
+        </li>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="mx-2 dropdown" appDropdown>
+            <a class="nav-link dropdown-toggle" role="button"
+              >Manage <span class="caret"></span
+            ></a>
+            <ul class="dropdown-menu">
+              <li><a>Save Data</a></li>
+              <li><a>Fetch Data</a></li>
+            </ul>
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </div>
+</nav>
