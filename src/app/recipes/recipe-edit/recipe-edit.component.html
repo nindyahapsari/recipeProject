@@ -54,13 +54,12 @@
           </div>
         </div>
       </div>
-      <!-- Still not working, please check video 220 and 219 -->
       <div class="row">
         <div class="col-xs-12" formArrayName="ingredients">
           <div
             class="row"
-            *ngFor="let ingredientCtrl of controls; let i = index"
-            [formGroupName]="i"
+            *ngFor="let ingredientCtrl of getControls(); let indx = index"
+            [formGroupName]="indx"
           >
             <div class="col-xs-8">
               <input type="text" class="form-control" formControlName="name" />
@@ -74,6 +73,13 @@
             </div>
             <div class="col-12">
               <button class="btn btn-danger">X</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button class="btn btn-success" (click)="onAddIngredient()">
+                Add New Ingredient
+              </button>
             </div>
           </div>
         </div>

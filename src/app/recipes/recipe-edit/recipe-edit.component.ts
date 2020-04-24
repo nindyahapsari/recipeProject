@@ -1,7 +1,7 @@
 import { RecipeService } from "../recipe.service";
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Params } from "@angular/router";
-import { FormGroup, FormControl, FormArray } from "@angular/forms";
+import { ActivatedRoute, Params, Router } from "@angular/router";
+import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-recipe-edit",
@@ -15,7 +15,8 @@ export class RecipeEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -30,19 +31,44 @@ export class RecipeEditComponent implements OnInit {
     console.log(this.recipeForm);
   }
 
+  onAddIngredient() {
+    (<FormArray>this.recipeForm.get("ingredients")).push(
+      new FormGroup({
+        name: new FormControl(null, Validators.required),
+        amount: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^[1-9]+[0-9]*$/),
+        ]),
+      })
+    );
+  }
+
+  onDeleteIngredient(index: number) {
+    (<FormArray>this.recipeForm.get("ingredients")).removeAt(index);
+  }
+
+  onCancel() {
+    this.router.navigate(["../"], { relativeTo: this.route });
+  }
+
   private initForm() {
     let recipeName = "";
     let recipeImagePath = "";
     let recipeDescription = "";
     let recipeIngredients = new FormArray([]);
+    console.log("recipeIngredients array", recipeIngredients);
 
     if (this.editMode) {
       const recipe = this.recipeService.getRecipeNum(this.id);
       recipeName = recipe.name;
       recipeImagePath = recipe.imagePath;
       recipeDescription = recipe.description;
-      if (recipe["ingredients"]) {
+
+      if (recipe["ingredient"]) {
+        console.log("ingredient if stat", recipe["ingredient"]); //checking if ingredient exist
         for (let ingredient of recipe.ingredient) {
+          // console.log("ingredient", ingredient);
+          console.log(ingredient.amount);
           recipeIngredients.push(
             new FormGroup({
               name: new FormControl(ingredient.name),
@@ -61,7 +87,7 @@ export class RecipeEditComponent implements OnInit {
     });
   }
 
-  get controls() {
+  getControls() {
     // a getter!
     return (<FormArray>this.recipeForm.get("ingredients")).controls;
   }
